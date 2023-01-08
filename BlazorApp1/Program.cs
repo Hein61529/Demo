@@ -2,7 +2,7 @@ using BlazorApp1.Data;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.ResponseCompression;
-using BlazorServerSignalRApp.Server.Hubs;
+using GenericWebConsole.Server.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,5 +38,8 @@ app.UseRouting();
 app.MapBlazorHub();
 app.MapHub<ChatHub>("/chathub");
 app.MapFallbackToPage("/_Host");
+
+ConsoleHub.chenRabbitMqHelper = new ChenRabbitMqHelper();
+System.Threading.Timer aTImer = new Timer(new TimerCallback(ConsoleHub.ReadMqData), null, 0, 500);
 
 app.Run();
